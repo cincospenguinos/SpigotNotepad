@@ -21,15 +21,39 @@ public class NoteExtraction {
     public Note buildNote() {
         Note note = new Note();
         note.setName(extractName());
+        note.setContent(extractContent());
 
         return note;
     }
 
     private String extractName() {
-        if (arguments.length >= 3 && NAME_SWITCHES.contains(arguments[1].toLowerCase())) {
+        if (hasNameIncluded()) {
             return arguments[2];
         }
 
         return DEFAULT_NOTE_NAME;
+    }
+
+    private String extractContent() {
+        StringBuilder builder = new StringBuilder();
+
+        int i = 1;
+
+        if (hasNameIncluded()) {
+            i = 3;
+        }
+
+        for (; i < arguments.length; i++) {
+            String s = arguments[i];
+
+            builder.append(s);
+            builder.append(" ");
+        }
+
+        return builder.toString().trim();
+    }
+
+    private boolean hasNameIncluded() {
+        return arguments.length >= 3 && NAME_SWITCHES.contains(arguments[1].toLowerCase());
     }
 }

@@ -20,4 +20,11 @@ class NoteExtractionTest {
         Note note = extraction.buildNote();
         assertEquals(note.getName(), "TheName");
     }
+
+    @Test
+    public void testExtractsContent() {
+        NoteExtraction extraction = new NoteExtraction(new String[] { "add", "Hello", "there", "Joe"});
+        Note note = extraction.buildNote();
+        assertEquals(note.getContent(), "Hello there Joe");
+    }
 }
