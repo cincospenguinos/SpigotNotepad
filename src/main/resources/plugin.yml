@@ -4,3 +4,7 @@
   author: Andre LaFleur
   main: usa.alafleur.spigot_notepad.Main
   api-version: "1.14"
+  commands:
+    note:
+      description: "Create, read, and delete notes to yourself"
+      usage: "/note <add|list|delete> [-name NAME] <content>"
