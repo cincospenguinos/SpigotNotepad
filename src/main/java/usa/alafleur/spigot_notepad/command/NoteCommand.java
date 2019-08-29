@@ -7,12 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import usa.alafleur.spigot_notepad.model.Note;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class NoteCommand implements CommandExecutor {
-    public static final List<String> ADD_ALIASES = Arrays.asList("add", "create");
-    public static final List<String> LIST_ALIASES = Arrays.asList("list", "show");
 
     private BoxStore boxStore;
 
@@ -23,33 +18,23 @@ public class NoteCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String commandString, String[] args) {
         String request = args[0];
+        CommandRequestType requestType = CommandRequestType.extractValue(request);
+        Box<Note> noteBox = boxStore.boxFor(Note.class);
 
-        if (isAddRequest(request)) {
-            Box<Note> noteBox = boxStore.boxFor(Note.class);
+        switch (requestType) {
+        case ADD_REQUEST:
             String content = extractContentFrom(args);
             noteBox.put(createNote(content));
             return true;
-        }
-
-        if (isListRequest(request)) {
-            Box<Note> noteBox = boxStore.boxFor(Note.class);
-
+        case LIST_REQUEST:
             for (Note note : noteBox.getAll()) {
                 sender.sendMessage(note.getName() + " - " + note.getContent());
             }
 
             return true;
+        default:
+            return false;
         }
-
-        return false;
-    }
-
-    private boolean isListRequest(String alias) {
-        return LIST_ALIASES.contains(alias.toLowerCase());
-    }
-
-    private boolean isAddRequest(String alias) {
-        return ADD_ALIASES.contains(alias.toLowerCase());
     }
 
     private String extractContentFrom(String[] args) {
