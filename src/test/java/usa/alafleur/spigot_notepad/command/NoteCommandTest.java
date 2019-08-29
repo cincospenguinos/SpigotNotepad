@@ -64,6 +64,18 @@ class NoteCommandTest {
     }
 
     @Test
+    public void testAddNoteWithName() {
+        ((MockCommand) mockCommand).setValid(true);
+        boolean success = submitCommand("note", new String[] { "create", "-name", "TheName", "content" });
+        assertTrue(success, "Valid note creation with default name works");
+        assertFalse(noteBox.isEmpty());
+
+        Note note = noteBox.get(1);
+        assertEquals(note.getName(), "TheName");
+        assertEquals(note.getContent(), "content");
+    }
+
+    @Test
     public void testShowAllNotes() {
         createNote("name", "content");
 

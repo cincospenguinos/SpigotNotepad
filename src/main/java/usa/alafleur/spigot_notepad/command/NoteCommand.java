@@ -23,12 +23,14 @@ public class NoteCommand implements CommandExecutor {
 
         switch (requestType) {
         case ADD_REQUEST:
+            Note newNote = new NoteExtraction(args).buildNote();
+            String name = newNote.getName();
             String content = extractContentFrom(args);
-            noteBox.put(createNote(content));
+            noteBox.put(createNote(name, content));
             return true;
         case LIST_REQUEST:
-            for (Note note : noteBox.getAll()) {
-                sender.sendMessage(note.getName() + " - " + note.getContent());
+            for (Note storedNote : noteBox.getAll()) {
+                sender.sendMessage(storedNote.getName() + " - " + storedNote.getContent());
             }
 
             return true;
@@ -40,8 +42,15 @@ public class NoteCommand implements CommandExecutor {
     private String extractContentFrom(String[] args) {
         StringBuilder builder = new StringBuilder();
 
-        for (int i = 1; i < args.length; i++) {
+        int i = 1;
+
+        if (args[1].equalsIgnoreCase("-name")) {
+            i = 3;
+        }
+
+        for (; i < args.length; i++) {
             String s = args[i];
+
             builder.append(s);
             builder.append(" ");
         }
@@ -49,10 +58,18 @@ public class NoteCommand implements CommandExecutor {
         return builder.toString().trim();
     }
 
-    private Note createNote(String content) {
+    private String extractNameFrom(String[] args) {
+        if (args.length > 3 && args[1].equalsIgnoreCase("-name")) {
+            return args[2];
+        }
+
+        return "FooBarBizBaz"; // TODO: Default name
+    }
+
+    private Note createNote(String name, String content) {
         Note note = new Note();
         note.setContent(content);
-        note.setName("FooBarBizBaz");
+        note.setName(name);
         return note;
     }
 }
