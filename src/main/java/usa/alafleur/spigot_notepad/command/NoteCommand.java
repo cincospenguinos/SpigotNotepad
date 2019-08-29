@@ -50,17 +50,20 @@ public class NoteCommand implements CommandExecutor {
             }
 
             for (Note storedNote : notesToShow) {
-                sender.sendMessage(storedNote.getName() + " - " + storedNote.getContent());
+                sender.sendMessage(storedNote.getId() + " - " + storedNote.getContent());
             }
 
             return true;
         case DELETE_REQUEST:
             if (args.length == 2) {
-                String name = args[1];
-                List<Note> notes = noteBox.query().equal(Note_.name, name).build().find();
-                noteBox.remove(notes.get(0).getId());
+                long id = Long.parseLong(args[1]);
 
-                sender.sendMessage("Note successfully deleted");
+                if (noteBox.get(id) == null) {
+                    sender.sendMessage("No note with ID " + id + " to delete");
+                } else {
+                    noteBox.remove(id);
+                    sender.sendMessage("Note successfully deleted");
+                }
                 return true;
             }
         default:

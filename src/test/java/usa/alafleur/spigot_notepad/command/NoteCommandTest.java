@@ -81,7 +81,7 @@ class NoteCommandTest {
 
         boolean success = submitCommand("note", new String[] { "list" });
         assertTrue(success);
-        assertEquals("name - content", ((MockPlayer) sender).getReceivedMessage(),
+        assertEquals("1 - content", ((MockPlayer) sender).getReceivedMessage(),
                 "Shows all messages in correct format");
     }
 
@@ -91,20 +91,25 @@ class NoteCommandTest {
 
         boolean success = submitCommand("note", new String[] { "show" });
         assertTrue(success);
-        assertEquals("name - content", ((MockPlayer) sender).getReceivedMessage(),
+        assertEquals("1 - content", ((MockPlayer) sender).getReceivedMessage(),
                 "Shows all messages in correct format");
     }
 
     @Test
-    public void testDeleteNoteByName() {
+    public void testDeleteNoteById() {
         createNote("DELETE_ME", "Delete me please");
         assertFalse(store.boxFor(Note.class).isEmpty());
 
-        boolean success = submitCommand("note", new String[] { "delete", "DELETE_ME" });
+        boolean success = submitCommand("note", new String[] { "delete", "1" });
         assertTrue(success);
         assertTrue(store.boxFor(Note.class).isEmpty());
         assertEquals("Note successfully deleted", ((MockPlayer) sender).getReceivedMessage(),
                 "Informs the user that deletion worked.");
+    }
+
+    @Test
+    public void testDeleteNoteWithoutAnything() {
+        assertFalse(submitCommand("note", new String[] { "delete" }));
     }
 
     @Test
@@ -144,7 +149,7 @@ class NoteCommandTest {
 
         ((MockPlayer) sender).setUniqueId(oldUUID);
         assertTrue(submitCommand("note", new String[] { "show" }));
-        assertEquals("note - This is a note", ((MockPlayer) sender).getReceivedMessage(),
+        assertEquals("1 - This is a note", ((MockPlayer) sender).getReceivedMessage(),
                 "Respects UUID when listing notes");
     }
 
