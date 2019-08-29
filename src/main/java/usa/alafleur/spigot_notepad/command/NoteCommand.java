@@ -11,7 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NoteCommand implements CommandExecutor {
-    private static final List<String> ALIASES = Arrays.asList("add", "create", "list");
+    public static final List<String> ADD_ALIASES = Arrays.asList("add", "create");
+    public static final List<String> LIST_ALIASES = Arrays.asList("list", "show");
+
     private BoxStore boxStore;
 
     public NoteCommand(BoxStore store) {
@@ -20,19 +22,34 @@ public class NoteCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String commandString, String[] args) {
-        if (args[0].equalsIgnoreCase("add")) {
+        String request = args[0];
+
+        if (isAddRequest(request)) {
             Box<Note> noteBox = boxStore.boxFor(Note.class);
             String content = extractContentFrom(args);
             noteBox.put(createNote(content));
             return true;
         }
 
-        if (args[0].equalsIgnoreCase("list")) {
+        if (isListRequest(request)) {
+            Box<Note> noteBox = boxStore.boxFor(Note.class);
+
+            for (Note note : noteBox.getAll()) {
+                sender.sendMessage(note.getName() + " - " + note.getContent());
+            }
 
             return true;
         }
 
         return false;
+    }
+
+    private boolean isListRequest(String alias) {
+        return LIST_ALIASES.contains(alias.toLowerCase());
+    }
+
+    private boolean isAddRequest(String alias) {
+        return ADD_ALIASES.contains(alias.toLowerCase());
     }
 
     private String extractContentFrom(String[] args) {

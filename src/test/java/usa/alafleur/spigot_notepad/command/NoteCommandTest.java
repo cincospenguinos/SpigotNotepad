@@ -53,16 +53,41 @@ class NoteCommandTest {
     }
 
     @Test
+    public void testAddNoteWithAlias() {
+        ((MockCommand) mockCommand).setValid(true);
+        boolean success = submitCommand("note", new String[] { "create", "Here's", "some", "content" });
+        assertTrue(success, "Valid note creation with default name works");
+        assertFalse(noteBox.isEmpty());
+
+        Note note = noteBox.get(1);
+        assertEquals("Here's some content", note.getContent());
+    }
+
+    @Test
     public void testShowAllNotes() {
-        Note note = new Note();
-        note.setContent("content");
-        note.setName("name");
-        store.boxFor(Note.class).put(note);
+        createNote("name", "content");
 
         boolean success = submitCommand("note", new String[] { "list" });
         assertTrue(success);
         assertEquals("name - content", ((MockPlayer) player).getReceivedMessage(),
                 "Shows all messages in correct format");
+    }
+
+    @Test
+    public void testShowAllNotesAliasWorks() {
+        createNote("name", "content");
+
+        boolean success = submitCommand("note", new String[] { "show" });
+        assertTrue(success);
+        assertEquals("name - content", ((MockPlayer) player).getReceivedMessage(),
+                "Shows all messages in correct format");
+    }
+
+    private void createNote(String name, String content) {
+        Note note = new Note();
+        note.setContent(content);
+        note.setName(name);
+        store.boxFor(Note.class).put(note);
     }
 
     private boolean submitCommand(String alias, String[] args) {
