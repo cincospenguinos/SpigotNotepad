@@ -26,6 +26,11 @@ public class NoteCommand implements CommandExecutor {
             sender.sendMessage("This command is only available to players");
             return true;
         }
+
+        if (args.length == 0) {
+            return false;
+        }
+
         Player player = (Player) sender;
 
         String request = args[0];

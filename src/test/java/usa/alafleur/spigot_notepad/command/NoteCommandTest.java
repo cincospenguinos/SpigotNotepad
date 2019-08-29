@@ -128,6 +128,11 @@ class NoteCommandTest {
     }
 
     @Test
+    public void testNothingWithNote() {
+        assertFalse(submitCommand("note", new String[0]));
+    }
+
+    @Test
     public void testShowCommandButWithOtherNotesForOtherPlayers() {
         UUID oldUUID = ((MockPlayer) sender).getUniqueId();
         createNote("note", "This is a note");
