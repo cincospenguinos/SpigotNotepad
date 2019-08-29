@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import usa.alafleur.spigot_notepad.model.Note;
 import usa.alafleur.spigot_notepad.model.Note_;
+import usa.alafleur.spigot_notepad.model.UUIDConverter;
 
 import java.util.List;
 
@@ -36,7 +37,14 @@ public class NoteCommand implements CommandExecutor {
             noteBox.put(newNote);
             return true;
         case LIST_REQUEST:
-            for (Note storedNote : noteBox.getAll()) {
+            List<Note> notesToShow = getNotesFromPlayer(player);
+
+            if (notesToShow.isEmpty()) {
+                player.sendMessage("There are no messages to show");
+                return true;
+            }
+
+            for (Note storedNote : notesToShow) {
                 sender.sendMessage(storedNote.getName() + " - " + storedNote.getContent());
             }
 
@@ -53,5 +61,12 @@ public class NoteCommand implements CommandExecutor {
         default:
             return false;
         }
+    }
+
+    private List<Note> getNotesFromPlayer(Player player) {
+        return noteBox.query()
+                .equal(Note_.playerUUID, new UUIDConverter().convertToDatabaseValue(player.getUniqueId()))
+                .build()
+                .find();
     }
 }

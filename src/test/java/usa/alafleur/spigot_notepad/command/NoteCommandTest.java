@@ -12,6 +12,7 @@ import usa.alafleur.spigot_notepad.model.MyObjectBox;
 import usa.alafleur.spigot_notepad.model.Note;
 
 import java.io.File;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -117,6 +118,29 @@ class NoteCommandTest {
         assertTrue(submitCommand("note", new String[] { "list" }));
         assertEquals("This command is only available to players", ((MockCommandSender) sender).getLastMessage(),
                 "Non-player is informed that this note is only for players.");
+    }
+
+    @Test
+    public void testShowCommandButNoNotes() {
+        assertTrue(submitCommand("note", new String[] { "show" }));
+        assertEquals("There are no messages to show", ((MockPlayer) sender).getReceivedMessage(),
+                "Informs the player that there are no notes to show.");
+    }
+
+    @Test
+    public void testShowCommandButWithOtherNotesForOtherPlayers() {
+        UUID oldUUID = ((MockPlayer) sender).getUniqueId();
+        createNote("note", "This is a note");
+        assertFalse(store.boxFor(Note.class).isEmpty());
+        ((MockPlayer) sender).setUniqueId(new UUID(110101L, 10010001L));
+        assertTrue(submitCommand("note", new String[] { "show" }));
+        assertEquals("There are no messages to show", ((MockPlayer) sender).getReceivedMessage(),
+                "Respects UUID when listing notes");
+
+        ((MockPlayer) sender).setUniqueId(oldUUID);
+        assertTrue(submitCommand("note", new String[] { "show" }));
+        assertEquals("note - This is a note", ((MockPlayer) sender).getReceivedMessage(),
+                "Respects UUID when listing notes");
     }
 
     private void createNote(String name, String content) {

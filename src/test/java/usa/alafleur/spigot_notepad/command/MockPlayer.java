@@ -36,9 +36,14 @@ import java.util.*;
 public class MockPlayer implements Player {
     private String name = "mock_player";
     private String receivedMessage = null;
+    private UUID uniqueId = new UUID(123L, 456L);
 
     public String getReceivedMessage() {
         return receivedMessage;
+    }
+
+    public void setUniqueId(UUID id) {
+        uniqueId = id;
     }
 
     @Override
@@ -908,7 +913,7 @@ public class MockPlayer implements Player {
 
     @Override
     public UUID getUniqueId() {
-        return new UUID(123L, 456L);
+        return uniqueId;
     }
 
     @Override
