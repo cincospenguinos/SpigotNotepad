@@ -20,6 +20,12 @@ class CommandRequestTypeTest {
     }
 
     @Test
+    public void testDeleteAliases() {
+        assertEquals(CommandRequestType.DELETE_REQUEST, CommandRequestType.extractValue("delete"));
+        assertEquals(CommandRequestType.DELETE_REQUEST, CommandRequestType.extractValue("remove"));
+    }
+
+    @Test
     public void testInvalidType() {
         assertEquals(CommandRequestType.INVALID_REQUEST,
                 CommandRequestType.extractValue("notavalidrequest"));

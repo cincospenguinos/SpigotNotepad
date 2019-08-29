@@ -2,6 +2,7 @@ package usa.alafleur.spigot_notepad.model;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Index;
 
 @Entity
 public class Note {
@@ -9,6 +10,7 @@ public class Note {
     @Id
     private long id;
 
+    @Index
     private String name;
     private String content;
 
