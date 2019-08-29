@@ -1,0 +1,6 @@
+---
+  name: SpigotNotepad
+  version: 0.0.1
+  author: Andre LaFleur
+  main: usa.alafleur.spigot_notepad.Main
+  api-version: "1.14"
