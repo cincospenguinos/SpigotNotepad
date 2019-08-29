@@ -13,4 +13,11 @@ class NoteExtractionTest {
         Note note = extraction.buildNote();
         assertEquals(note.getName(), "TheName");
     }
+
+    @Test
+    public void testExtractsNameWithShortSwitch() {
+        NoteExtraction extraction = new NoteExtraction(new String[] { "add", "-n", "TheName" });
+        Note note = extraction.buildNote();
+        assertEquals(note.getName(), "TheName");
+    }
 }
