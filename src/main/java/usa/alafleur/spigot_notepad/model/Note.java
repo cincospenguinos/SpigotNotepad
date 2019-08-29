@@ -43,4 +43,8 @@ public class Note {
     public void setPlayerUUID(UUID playerUUID) {
         this.playerUUID = playerUUID;
     }
+
+    public boolean belongsTo(UUID uniqueId) {
+        return uniqueId.equals(playerUUID);
+    }
 }

@@ -141,6 +141,16 @@ class NoteCommandTest {
                 "Respects UUID when listing notes");
     }
 
+    @Test
+    public void testDeleteCommandButWithNoteBelongingToOtherPlayer() {
+        createNote("This is a note");
+        assertFalse(store.boxFor(Note.class).isEmpty());
+        ((MockPlayer) sender).setUniqueId(new UUID(110101L, 10010001L));
+        assertTrue(submitCommand("note", new String[] { "delete", "1" }));
+        assertEquals("No note with ID 1 to delete", ((MockPlayer) sender).getReceivedMessage(),
+                "Respects UUID when deleting notes");
+    }
+
     private void createNote(String content) {
         Note note = new Note();
         note.setContent(content);

@@ -57,8 +57,9 @@ public class NoteCommand implements CommandExecutor {
         case DELETE_REQUEST:
             if (args.length == 2) {
                 long id = Long.parseLong(args[1]);
+                Note noteToDelete = noteBox.get(id);
 
-                if (noteBox.get(id) == null) {
+                if (noteToDelete == null || !noteToDelete.belongsTo(player.getUniqueId())) {
                     sender.sendMessage("No note with ID " + id + " to delete");
                 } else {
                     noteBox.remove(id);
