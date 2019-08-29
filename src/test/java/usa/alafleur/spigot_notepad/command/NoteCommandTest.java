@@ -47,6 +47,7 @@ class NoteCommandTest {
         boolean success = submitCommand("note", new String[] { "add", "Here's", "some", "content" });
         assertTrue(success);
         assertFalse(noteBox.isEmpty());
+        assertEquals("Note added successfully", ((MockPlayer) sender).getReceivedMessage());
 
         Note note = noteBox.get(1);
         assertEquals("Here's some content", note.getContent());

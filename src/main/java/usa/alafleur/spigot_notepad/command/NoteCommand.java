@@ -40,6 +40,7 @@ public class NoteCommand implements CommandExecutor {
         case ADD_REQUEST:
             Note newNote = new NoteExtraction(args).buildNote(player.getUniqueId());
             noteBox.put(newNote);
+            player.sendMessage("Note added successfully");
             return true;
         case SHOW_REQUEST:
             if (isValidDeleteOrShowRequest(args)) {
