@@ -45,7 +45,7 @@ class NoteCommandTest {
     public void testValidAddNote() {
         ((MockCommand) mockCommand).setValid(true);
         boolean success = submitCommand("note", new String[] { "add", "Here's", "some", "content" });
-        assertTrue(success, "Valid note creation with default name works");
+        assertTrue(success);
         assertFalse(noteBox.isEmpty());
 
         Note note = noteBox.get(1);
@@ -56,7 +56,7 @@ class NoteCommandTest {
     public void testAddNoteWithAlias() {
         ((MockCommand) mockCommand).setValid(true);
         boolean success = submitCommand("note", new String[] { "create", "Here's", "some", "content" });
-        assertTrue(success, "Valid note creation with default name works");
+        assertTrue(success);
         assertFalse(noteBox.isEmpty());
 
         Note note = noteBox.get(1);
@@ -64,20 +64,8 @@ class NoteCommandTest {
     }
 
     @Test
-    public void testAddNoteWithName() {
-        ((MockCommand) mockCommand).setValid(true);
-        boolean success = submitCommand("note", new String[] { "create", "-name", "TheName", "content" });
-        assertTrue(success, "Valid note creation with default name works");
-        assertFalse(noteBox.isEmpty());
-
-        Note note = noteBox.get(1);
-        assertEquals(note.getName(), "TheName");
-        assertEquals(note.getContent(), "content");
-    }
-
-    @Test
     public void testShowAllNotes() {
-        createNote("name", "content");
+        createNote("content");
 
         boolean success = submitCommand("note", new String[] { "list" });
         assertTrue(success);
@@ -87,7 +75,7 @@ class NoteCommandTest {
 
     @Test
     public void testShowAllNotesAliasWorks() {
-        createNote("name", "content");
+        createNote("content");
 
         boolean success = submitCommand("note", new String[] { "show" });
         assertTrue(success);
@@ -97,7 +85,7 @@ class NoteCommandTest {
 
     @Test
     public void testDeleteNoteById() {
-        createNote("DELETE_ME", "Delete me please");
+        createNote("Delete me please");
         assertFalse(store.boxFor(Note.class).isEmpty());
 
         boolean success = submitCommand("note", new String[] { "delete", "1" });
@@ -140,7 +128,7 @@ class NoteCommandTest {
     @Test
     public void testShowCommandButWithOtherNotesForOtherPlayers() {
         UUID oldUUID = ((MockPlayer) sender).getUniqueId();
-        createNote("note", "This is a note");
+        createNote("This is a note");
         assertFalse(store.boxFor(Note.class).isEmpty());
         ((MockPlayer) sender).setUniqueId(new UUID(110101L, 10010001L));
         assertTrue(submitCommand("note", new String[] { "show" }));
@@ -153,10 +141,9 @@ class NoteCommandTest {
                 "Respects UUID when listing notes");
     }
 
-    private void createNote(String name, String content) {
+    private void createNote(String content) {
         Note note = new Note();
         note.setContent(content);
-        note.setName(name);
         note.setPlayerUUID(((MockPlayer) sender).getUniqueId());
         store.boxFor(Note.class).put(note);
     }

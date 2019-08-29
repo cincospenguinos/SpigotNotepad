@@ -10,7 +10,6 @@ import java.util.UUID;
  * Extracts note from the command arguments handed to it.
  */
 public class NoteExtraction {
-    private static final String DEFAULT_NOTE_NAME = "NOTE";
     private static final List<String> NAME_SWITCHES = Arrays.asList("-name", "-n", "--name");
 
     private String[] arguments;
@@ -21,19 +20,10 @@ public class NoteExtraction {
 
     public Note buildNote(UUID playerUUID) {
         Note note = new Note();
-        note.setName(extractName());
         note.setContent(extractContent());
         note.setPlayerUUID(playerUUID);
 
         return note;
-    }
-
-    private String extractName() {
-        if (hasNameIncluded()) {
-            return arguments[2];
-        }
-
-        return DEFAULT_NOTE_NAME;
     }
 
     private String extractContent() {

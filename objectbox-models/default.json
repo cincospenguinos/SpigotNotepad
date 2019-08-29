@@ -13,11 +13,6 @@
           "name": "id"
         },
         {
-          "id": "2:5835420422862105038",
-          "indexId": "1:3795800567874489805",
-          "name": "name"
-        },
-        {
           "id": "3:2750050302460726149",
           "name": "content"
         },
@@ -36,9 +31,12 @@
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
-  "retiredIndexUids": [],
+  "retiredIndexUids": [
+    3795800567874489805
+  ],
   "retiredPropertyUids": [
-    5006217555247116828
+    5006217555247116828,
+    5835420422862105038
   ],
   "retiredRelationUids": [],
   "version": 1

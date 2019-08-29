@@ -13,9 +13,6 @@ public class Note {
     @Id
     private long id;
 
-    @Index
-    private String name;
-
     @Convert(converter = UUIDConverter.class, dbType = String.class)
     private UUID playerUUID;
 
@@ -29,14 +26,6 @@ public class Note {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getContent() {

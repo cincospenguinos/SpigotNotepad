@@ -12,20 +12,6 @@ class NoteExtractionTest {
     private UUID mockUUID = new UUID(5555L, 444L);
 
     @Test
-    public void testExtractsName() {
-        NoteExtraction extraction = new NoteExtraction(new String[] { "add", "-name", "TheName" });
-        Note note = extraction.buildNote(mockUUID);
-        assertEquals(note.getName(), "TheName");
-    }
-
-    @Test
-    public void testExtractsNameWithShortSwitch() {
-        NoteExtraction extraction = new NoteExtraction(new String[] { "add", "-n", "TheName" });
-        Note note = extraction.buildNote(mockUUID);
-        assertEquals(note.getName(), "TheName");
-    }
-
-    @Test
     public void testExtractsContent() {
         NoteExtraction extraction = new NoteExtraction(new String[] { "add", "Hello", "there", "Joe"});
         Note note = extraction.buildNote(mockUUID);
