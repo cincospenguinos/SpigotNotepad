@@ -16,13 +16,17 @@ class CommandRequestTypeTest {
     @Test
     public void testListAliases() {
         assertEquals(CommandRequestType.LIST_REQUEST, CommandRequestType.extractValue("list"));
-        assertEquals(CommandRequestType.LIST_REQUEST, CommandRequestType.extractValue("show"));
     }
 
     @Test
     public void testDeleteAliases() {
         assertEquals(CommandRequestType.DELETE_REQUEST, CommandRequestType.extractValue("delete"));
         assertEquals(CommandRequestType.DELETE_REQUEST, CommandRequestType.extractValue("remove"));
+    }
+
+    @Test
+    public void testShowAliases() {
+        assertEquals(CommandRequestType.SHOW_REQUEST, CommandRequestType.extractValue("show"));
     }
 
     @Test

@@ -41,6 +41,21 @@ public class NoteCommand implements CommandExecutor {
             Note newNote = new NoteExtraction(args).buildNote(player.getUniqueId());
             noteBox.put(newNote);
             return true;
+        case SHOW_REQUEST:
+            if (isValidDeleteOrShowRequest(args)) {
+                long id = Long.parseLong(args[1]);
+                Note noteToShow = noteBox.get(id);
+
+                if (!noteExistsOrBelongsToPlayer(noteToShow, player)) {
+                    sender.sendMessage("No note with ID " + id + " to show");
+                } else {
+                    player.sendMessage(noteToShow.getContent());
+                }
+
+                return true;
+            }
+
+            return false;
         case LIST_REQUEST:
             List<Note> notesToShow = getNotesFromPlayer(player);
 
@@ -55,11 +70,11 @@ public class NoteCommand implements CommandExecutor {
 
             return true;
         case DELETE_REQUEST:
-            if (args.length == 2) {
+            if (isValidDeleteOrShowRequest(args)) {
                 long id = Long.parseLong(args[1]);
                 Note noteToDelete = noteBox.get(id);
 
-                if (noteToDelete == null || !noteToDelete.belongsTo(player.getUniqueId())) {
+                if (!noteExistsOrBelongsToPlayer(noteToDelete, player)) {
                     sender.sendMessage("No note with ID " + id + " to delete");
                 } else {
                     noteBox.remove(id);
@@ -70,6 +85,23 @@ public class NoteCommand implements CommandExecutor {
         default:
             return false;
         }
+    }
+
+    private boolean noteExistsOrBelongsToPlayer(Note note, Player player) {
+        return note != null && note.belongsTo(player);
+    }
+
+    private boolean isValidDeleteOrShowRequest(String[] args) {
+        try {
+            if (args.length ==  2) {
+                Long.parseLong(args[1]);
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return false;
     }
 
     private List<Note> getNotesFromPlayer(Player player) {

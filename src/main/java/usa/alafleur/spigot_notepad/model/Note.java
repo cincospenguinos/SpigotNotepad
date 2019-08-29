@@ -3,7 +3,6 @@ package usa.alafleur.spigot_notepad.model;
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
-import io.objectbox.annotation.Index;
 
 import java.util.UUID;
 
@@ -44,7 +43,7 @@ public class Note {
         this.playerUUID = playerUUID;
     }
 
-    public boolean belongsTo(UUID uniqueId) {
-        return uniqueId.equals(playerUUID);
+    public boolean belongsTo(org.bukkit.entity.Entity entity) {
+        return entity.getUniqueId().equals(playerUUID);
     }
 }
