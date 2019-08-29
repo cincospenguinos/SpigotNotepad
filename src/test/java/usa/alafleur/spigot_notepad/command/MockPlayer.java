@@ -908,7 +908,7 @@ public class MockPlayer implements Player {
 
     @Override
     public UUID getUniqueId() {
-        return null;
+        return new UUID(123L, 456L);
     }
 
     @Override

@@ -4,6 +4,7 @@ import usa.alafleur.spigot_notepad.model.Note;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Extracts note from the command arguments handed to it.
@@ -18,10 +19,11 @@ public class NoteExtraction {
         arguments = _arguments;
     }
 
-    public Note buildNote() {
+    public Note buildNote(UUID playerUUID) {
         Note note = new Note();
         note.setName(extractName());
         note.setContent(extractContent());
+        note.setPlayerUUID(playerUUID);
 
         return note;
     }

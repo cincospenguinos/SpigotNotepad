@@ -25,13 +25,14 @@ public class NoteCommand implements CommandExecutor {
             sender.sendMessage("This command is only available to players");
             return true;
         }
+        Player player = (Player) sender;
 
         String request = args[0];
         CommandRequestType requestType = CommandRequestType.extractValue(request);
 
         switch (requestType) {
         case ADD_REQUEST:
-            Note newNote = new NoteExtraction(args).buildNote();
+            Note newNote = new NoteExtraction(args).buildNote(player.getUniqueId());
             noteBox.put(newNote);
             return true;
         case LIST_REQUEST:

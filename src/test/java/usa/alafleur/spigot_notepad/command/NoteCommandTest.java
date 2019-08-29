@@ -16,7 +16,6 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NoteCommandTest {
-
     private CommandSender sender;
     private Command mockCommand;
     private BoxStore store;
@@ -124,6 +123,7 @@ class NoteCommandTest {
         Note note = new Note();
         note.setContent(content);
         note.setName(name);
+        note.setPlayerUUID(((MockPlayer) sender).getUniqueId());
         store.boxFor(Note.class).put(note);
     }
 
