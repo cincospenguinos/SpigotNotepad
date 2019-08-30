@@ -1,15 +1,37 @@
 # SpigotNotepad
 
-TODO: explain what this is
+A simple notepad application for Spigot. Fast, sleek, simple, intuitive.
 
-## TODO/Issues
+## Installing
 
-- [x] `/note` craps out because it's invalid
-- [x] Notes only use IDs now, not names
-- [x] `/note read <NAME>` to read the full text of a note
-- [x] A message for creating a note informing that it's valid
-- [x] Only show the first maybe 10 characters of a note
-- [x] Single letter aliases for CRUD operations (a, c, s, l, d)
-- [x] Show messages to player about note command in italics to help player know it's from the plugin
-- [x] Better usage message
-- [ ] A proper intellisense for note command stuffs
+Simply take the built jar file and place it into your `plugins` directory.
+
+## Usage
+
+There are four different parts of the `/note` command that are included: `read`, `delete`, `list`, and `add`.
+
+### Adding a note
+
+To add a note, simply type `/note add` and then type in the rest of your note's content:
+
+`/note add Hello there. This is a note to myself to go and mine some diamonds later.`
+
+### Listing notes
+
+To list your notes, simply type `/note list`. This will print out the first few characters of each note as well as their IDs.
+
+### Reading or Deleting notes
+
+To read or delete a note, simply include its ID:
+
+`/note read 12`
+`/note delete 3`
+
+## Contributing
+
+1. Fork this repo
+2. Write tests for the behavior you want adjusted (trust me--doing it first is the best way to go.)
+3. Implement behavior
+4. Check and make sure the tests pass.
+5. Refactor. Repeat until behavior is finished.
+6. Submit a PR.
