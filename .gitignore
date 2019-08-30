@@ -4,3 +4,4 @@ run
 *.so
 *.bak
 test/
+*.dylib
