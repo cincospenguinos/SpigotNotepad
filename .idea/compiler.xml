@@ -44,8 +44,8 @@
           <entry name="$MAVEN_REPOSITORY$/com/google/auto/auto-common/0.9/auto-common-0.9.jar" />
           <entry name="$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/../lib/tools.jar" />
         </processorPath>
-        <module name="spigot_notepad" />
         <module name="SpigotNotepad" />
+        <module name="spigot_notepad" />
       </profile>
     </annotationProcessing>
   </component>
