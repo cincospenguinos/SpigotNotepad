@@ -66,7 +66,9 @@ public class NoteCommand implements CommandExecutor {
             }
 
             for (Note storedNote : notesToShow) {
-                sender.sendMessage(storedNote.getId() + " - " + storedNote.getContent());
+                String content = storedNote.getContent();
+                String substring = content.substring(0, Math.min(16, content.length()));
+                sender.sendMessage(storedNote.getId() + " - " + substring);
             }
 
             return true;

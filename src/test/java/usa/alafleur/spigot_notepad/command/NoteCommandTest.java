@@ -151,6 +151,14 @@ class NoteCommandTest {
     }
 
     @Test
+    public void testListCommandWithLongNote() {
+        createNote("This is an extremely long note, with a lot of stuff inside of " +
+                "it, and will not fit into a single line, so it must be truncated.");
+        submitCommand(new String[] { "list" });
+        assertEquals("1 - This is an extre", ((MockPlayer) sender).getReceivedMessage());
+    }
+
+    @Test
     public void testAttemptToShowCommandAndUseNonId() {
         assertFalse(submitCommand(new String[] { "show", "foo" }));
     }
