@@ -2,6 +2,7 @@ package usa.alafleur.spigot_notepad.command;
 
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,7 +41,7 @@ public class NoteCommand implements CommandExecutor {
         case ADD_REQUEST:
             Note newNote = new NoteExtraction(args).buildNote(player.getUniqueId());
             noteBox.put(newNote);
-            player.sendMessage("Note added successfully");
+            player.sendMessage(ChatColor.ITALIC + "Note added successfully");
             return true;
         case SHOW_REQUEST:
             if (isValidDeleteOrShowRequest(args)) {
@@ -48,7 +49,7 @@ public class NoteCommand implements CommandExecutor {
                 Note noteToShow = noteBox.get(id);
 
                 if (!noteExistsOrBelongsToPlayer(noteToShow, player)) {
-                    sender.sendMessage("No note with ID " + id + " to show");
+                    sender.sendMessage(ChatColor.ITALIC + "" + ChatColor.RED + "No note with ID " + id + " to show");
                 } else {
                     player.sendMessage(noteToShow.getContent());
                 }
@@ -61,14 +62,15 @@ public class NoteCommand implements CommandExecutor {
             List<Note> notesToShow = getNotesFromPlayer(player);
 
             if (notesToShow.isEmpty()) {
-                player.sendMessage("There are no messages to show");
+                player.sendMessage(ChatColor.ITALIC + "" + ChatColor.RED + "There are no messages to show");
                 return true;
             }
 
             for (Note storedNote : notesToShow) {
                 String content = storedNote.getContent();
                 String substring = content.substring(0, Math.min(16, content.length()));
-                sender.sendMessage(storedNote.getId() + " - " + substring);
+                sender.sendMessage(ChatColor.BOLD + "" + storedNote.getId() +
+                        "" + ChatColor.RESET + "" + " - " + substring);
             }
 
             return true;
@@ -78,10 +80,10 @@ public class NoteCommand implements CommandExecutor {
                 Note noteToDelete = noteBox.get(id);
 
                 if (!noteExistsOrBelongsToPlayer(noteToDelete, player)) {
-                    sender.sendMessage("No note with ID " + id + " to delete");
+                    sender.sendMessage(ChatColor.ITALIC + "" + ChatColor.RED + "No note with ID " + id + " to delete");
                 } else {
                     noteBox.remove(id);
-                    sender.sendMessage("Note successfully deleted");
+                    sender.sendMessage(ChatColor.ITALIC + "Note successfully deleted");
                 }
                 return true;
             }

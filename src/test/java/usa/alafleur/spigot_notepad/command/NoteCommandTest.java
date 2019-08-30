@@ -47,7 +47,7 @@ class NoteCommandTest {
         boolean success = submitCommand(new String[] { "add", "Here's", "some", "content" });
         assertTrue(success);
         assertFalse(noteBox.isEmpty());
-        assertEquals("Note added successfully", ((MockPlayer) sender).getReceivedMessage());
+        assertPlayerReceivedMessage("Note added successfully");
 
         Note note = noteBox.get(1);
         assertEquals("Here's some content", note.getContent());
@@ -70,7 +70,7 @@ class NoteCommandTest {
 
         boolean success = submitCommand(new String[] { "list" });
         assertTrue(success);
-        assertEquals("1 - content", ((MockPlayer) sender).getReceivedMessage(),
+        assertEquals("§l1§r - content", ((MockPlayer) sender).getReceivedMessage(),
                 "Shows all messages in correct format");
     }
 
@@ -126,7 +126,7 @@ class NoteCommandTest {
 
         ((MockPlayer) sender).setUniqueId(oldUUID);
         assertTrue(submitCommand(new String[] { "list" }));
-        assertPlayerReceivedMessage("1 - This is a note", "Respects UUID when listing notes");
+        assertPlayerReceivedMessage("§l1§r - This is a note", "Respects UUID when listing notes");
     }
 
     @Test
@@ -151,7 +151,7 @@ class NoteCommandTest {
         createNote("This is an extremely long note, with a lot of stuff inside of " +
                 "it, and will not fit into a single line, so it must be truncated.");
         submitCommand(new String[] { "list" });
-        assertPlayerReceivedMessage("1 - This is an extre");
+        assertPlayerReceivedMessage("§l1§r - This is an extre");
     }
 
     @Test
