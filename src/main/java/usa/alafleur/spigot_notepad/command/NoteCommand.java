@@ -106,8 +106,9 @@ public class NoteCommand implements CommandExecutor {
     }
 
     private List<Note> getNotesFromPlayer(Player player) {
+        String idString = new UUIDConverter().convertToDatabaseValue(player.getUniqueId());
         return noteBox.query()
-                .equal(Note_.playerUUID, new UUIDConverter().convertToDatabaseValue(player.getUniqueId()))
+                .equal(Note_.playerUUID, idString)
                 .build()
                 .find();
     }

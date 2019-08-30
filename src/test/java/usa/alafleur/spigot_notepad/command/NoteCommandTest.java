@@ -44,7 +44,7 @@ class NoteCommandTest {
     @Test
     public void testValidAddNote() {
         ((MockCommand) mockCommand).setValid(true);
-        boolean success = submitCommand("note", new String[] { "add", "Here's", "some", "content" });
+        boolean success = submitCommand(new String[] { "add", "Here's", "some", "content" });
         assertTrue(success);
         assertFalse(noteBox.isEmpty());
         assertEquals("Note added successfully", ((MockPlayer) sender).getReceivedMessage());
@@ -56,7 +56,7 @@ class NoteCommandTest {
     @Test
     public void testAddNoteWithAlias() {
         ((MockCommand) mockCommand).setValid(true);
-        boolean success = submitCommand("note", new String[] { "create", "Here's", "some", "content" });
+        boolean success = submitCommand(new String[] { "create", "Here's", "some", "content" });
         assertTrue(success);
         assertFalse(noteBox.isEmpty());
 
@@ -68,7 +68,7 @@ class NoteCommandTest {
     public void testShowAllNotes() {
         createNote("content");
 
-        boolean success = submitCommand("note", new String[] { "list" });
+        boolean success = submitCommand(new String[] { "list" });
         assertTrue(success);
         assertEquals("1 - content", ((MockPlayer) sender).getReceivedMessage(),
                 "Shows all messages in correct format");
@@ -79,7 +79,7 @@ class NoteCommandTest {
         createNote("Delete me please");
         assertFalse(store.boxFor(Note.class).isEmpty());
 
-        boolean success = submitCommand("note", new String[] { "delete", "1" });
+        boolean success = submitCommand(new String[] { "delete", "1" });
         assertTrue(success);
         assertTrue(store.boxFor(Note.class).isEmpty());
         assertEquals("Note successfully deleted", ((MockPlayer) sender).getReceivedMessage(),
@@ -88,32 +88,32 @@ class NoteCommandTest {
 
     @Test
     public void testDeleteNoteWithoutAnything() {
-        assertFalse(submitCommand("note", new String[] { "delete" }));
+        assertFalse(submitCommand(new String[] { "delete" }));
     }
 
     @Test
     public void testInvalidDeleteRequest() {
-        assertFalse(submitCommand("note", new String[] { "delete" }));
+        assertFalse(submitCommand(new String[] { "delete" }));
     }
 
     @Test
     public void testRequestCannotComeFromServer() {
         sender = new MockCommandSender();
-        assertTrue(submitCommand("note", new String[] { "list" }));
+        assertTrue(submitCommand(new String[] { "list" }));
         assertEquals("This command is only available to players", ((MockCommandSender) sender).getLastMessage(),
                 "Non-player is informed that this note is only for players.");
     }
 
     @Test
     public void testShowCommandButNoNotes() {
-        assertTrue(submitCommand("note", new String[] { "list" }));
+        assertTrue(submitCommand(new String[] { "list" }));
         assertEquals("There are no messages to show", ((MockPlayer) sender).getReceivedMessage(),
                 "Informs the player that there are no notes to show.");
     }
 
     @Test
     public void testNothingWithNote() {
-        assertFalse(submitCommand("note", new String[0]));
+        assertFalse(submitCommand(new String[0]));
     }
 
     @Test
@@ -122,12 +122,12 @@ class NoteCommandTest {
         createNote("This is a note");
         assertFalse(store.boxFor(Note.class).isEmpty());
         ((MockPlayer) sender).setUniqueId(new UUID(110101L, 10010001L));
-        assertTrue(submitCommand("note", new String[] { "list" }));
+        assertTrue(submitCommand(new String[] { "list" }));
         assertEquals("There are no messages to show", ((MockPlayer) sender).getReceivedMessage(),
                 "Respects UUID when listing notes");
 
         ((MockPlayer) sender).setUniqueId(oldUUID);
-        assertTrue(submitCommand("note", new String[] { "list" }));
+        assertTrue(submitCommand(new String[] { "list" }));
         assertEquals("1 - This is a note", ((MockPlayer) sender).getReceivedMessage(),
                 "Respects UUID when listing notes");
     }
@@ -137,7 +137,7 @@ class NoteCommandTest {
         createNote("This is a note");
         assertFalse(store.boxFor(Note.class).isEmpty());
         ((MockPlayer) sender).setUniqueId(new UUID(110101L, 10010001L));
-        assertTrue(submitCommand("note", new String[] { "delete", "1" }));
+        assertTrue(submitCommand(new String[] { "delete", "1" }));
         assertEquals("No note with ID 1 to delete", ((MockPlayer) sender).getReceivedMessage(),
                 "Respects UUID when deleting notes");
     }
@@ -146,18 +146,18 @@ class NoteCommandTest {
     public void testShowNoteCommand() {
         createNote("Hey there");
         assertFalse(store.boxFor(Note.class).isEmpty());
-        assertTrue(submitCommand("note", new String[] { "show", "1" }));
+        assertTrue(submitCommand(new String[] { "show", "1" }));
         assertEquals("Hey there", ((MockPlayer) sender).getReceivedMessage());
     }
 
     @Test
     public void testAttemptToShowCommandAndUseNonId() {
-        assertFalse(submitCommand("note", new String[] { "show", "foo" }));
+        assertFalse(submitCommand(new String[] { "show", "foo" }));
     }
 
     @Test
     public void testAttemptToDeleteCommandAndUseNonId() {
-        assertFalse(submitCommand("note", new String[] { "delete", "foo" }));
+        assertFalse(submitCommand(new String[] { "delete", "foo" }));
     }
 
     private void createNote(String content) {
@@ -167,8 +167,8 @@ class NoteCommandTest {
         store.boxFor(Note.class).put(note);
     }
 
-    private boolean submitCommand(String alias, String[] args) {
+    private boolean submitCommand(String[] args) {
         NoteCommand noteCommand = new NoteCommand(store);
-        return noteCommand.onCommand(sender, mockCommand, alias, args);
+        return noteCommand.onCommand(sender, mockCommand, "note", args);
     }
 }
