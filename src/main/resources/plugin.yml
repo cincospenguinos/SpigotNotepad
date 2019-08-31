@@ -1,10 +1,10 @@
 ---
   name: SpigotNotepad
-  version: 0.0.1
+  version: "0.1.1"
   author: Andre LaFleur
   main: usa.alafleur.spigot_notepad.Main
   api-version: "1.14"
   commands:
     note:
-      description: "Create, read, and delete notes to yourself. Use `add`, `list`, `read`, and `delete` to interact with notes."
+      description: "Create, read, and delete notes to yourself"
       usage: "/note <add CONTENT | list | read ID | delete ID>"
