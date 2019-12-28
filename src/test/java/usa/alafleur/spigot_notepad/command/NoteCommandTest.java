@@ -1,8 +1,5 @@
 package usa.alafleur.spigot_notepad.command;
 
-import io.objectbox.Box;
-import io.objectbox.BoxStore;
-import io.objectbox.DebugFlags;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import usa.alafleur.spigot_notepad.model.Note;
 import usa.alafleur.spigot_notepad.model.Notepad;
 
-import java.io.File;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
