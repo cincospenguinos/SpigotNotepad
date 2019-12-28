@@ -49,6 +49,31 @@ public class Notepad {
         }
     }
 
+    public List<Note> getAllNotes() {
+        List<Note> allNotes = new ArrayList<>();
+
+        for (List<Note> n : notes.values()) {
+            allNotes.addAll(n);
+        }
+
+        return allNotes;
+    }
+
+    public static Notepad fromNotesList(List<Note> notes) {
+        long biggestId = -1;
+        Notepad notepad = new Notepad();
+
+        for (Note n : notes) {
+            if (biggestId < n.getId()) {
+                biggestId = n.getId() + 1;
+            }
+
+            notepad.add(n);
+        }
+
+        return notepad;
+    }
+
     private boolean notesExistFor(UUID player) {
         return notes.containsKey(player);
     }

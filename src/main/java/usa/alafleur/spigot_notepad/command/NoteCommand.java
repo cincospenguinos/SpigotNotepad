@@ -1,7 +1,5 @@
 package usa.alafleur.spigot_notepad.command;
 
-import io.objectbox.Box;
-import io.objectbox.BoxStore;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import usa.alafleur.spigot_notepad.model.Note;
 import usa.alafleur.spigot_notepad.model.Notepad;
-import usa.alafleur.spigot_notepad.model.UUIDConverter;
 
 import java.util.List;
 
