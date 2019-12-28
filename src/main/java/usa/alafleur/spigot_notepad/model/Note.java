@@ -1,23 +1,18 @@
 package usa.alafleur.spigot_notepad.model;
 
-import io.objectbox.annotation.Convert;
-import io.objectbox.annotation.Entity;
-import io.objectbox.annotation.Id;
-
 import java.util.UUID;
 
-@Entity
 public class Note {
-
-    @Id
     private long id;
-
-    @Convert(converter = UUIDConverter.class, dbType = String.class)
     private UUID playerUUID;
-
     private String content;
 
     public Note() {}
+
+    public Note(UUID _playerUUID, String _content) {
+        playerUUID = _playerUUID;
+        content = _content;
+    }
 
     public long getId() {
         return id;

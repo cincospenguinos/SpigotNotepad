@@ -8,17 +8,16 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import usa.alafleur.spigot_notepad.model.Note;
-import usa.alafleur.spigot_notepad.model.Note_;
+import usa.alafleur.spigot_notepad.model.Notepad;
 import usa.alafleur.spigot_notepad.model.UUIDConverter;
 
 import java.util.List;
 
 public class NoteCommand implements CommandExecutor {
+    private Notepad notepad;
 
-    private Box<Note> noteBox;
-
-    public NoteCommand(BoxStore store) {
-        noteBox = store.boxFor(Note.class);
+    public NoteCommand(Notepad _notepad) {
+        notepad = _notepad;
     }
 
     @Override
@@ -40,18 +39,22 @@ public class NoteCommand implements CommandExecutor {
         switch (requestType) {
         case ADD_REQUEST:
             Note newNote = new NoteExtraction(args).buildNote(player.getUniqueId());
-            noteBox.put(newNote);
+            notepad.add(newNote);
             player.sendMessage(ChatColor.ITALIC + "Note added successfully");
             return true;
         case SHOW_REQUEST:
             if (isValidDeleteOrShowRequest(args)) {
                 long id = Long.parseLong(args[1]);
-                Note noteToShow = noteBox.get(id);
 
-                if (!noteExistsOrBelongsToPlayer(noteToShow, player)) {
+                if (!noteExistsOrBelongsToPlayer(id, player)) {
                     sender.sendMessage(ChatColor.ITALIC + "" + ChatColor.RED + "No note with ID " + id + " to show");
                 } else {
-                    player.sendMessage(noteToShow.getContent());
+                    for (Note n : notepad.notesFor(player.getUniqueId())) {
+                        if (n.getId() == id) {
+                            player.sendMessage(n.getContent());
+                            break;
+                        }
+                    }
                 }
 
                 return true;
@@ -59,7 +62,7 @@ public class NoteCommand implements CommandExecutor {
 
             return false;
         case LIST_REQUEST:
-            List<Note> notesToShow = getNotesFromPlayer(player);
+            List<Note> notesToShow = notepad.notesFor(player.getUniqueId());
 
             if (notesToShow.isEmpty()) {
                 player.sendMessage(ChatColor.ITALIC + "" + ChatColor.RED + "There are no messages to show");
@@ -77,12 +80,11 @@ public class NoteCommand implements CommandExecutor {
         case DELETE_REQUEST:
             if (isValidDeleteOrShowRequest(args)) {
                 long id = Long.parseLong(args[1]);
-                Note noteToDelete = noteBox.get(id);
 
-                if (!noteExistsOrBelongsToPlayer(noteToDelete, player)) {
+                if (!noteExistsOrBelongsToPlayer(id, player)) {
                     sender.sendMessage(ChatColor.ITALIC + "" + ChatColor.RED + "No note with ID " + id + " to delete");
                 } else {
-                    noteBox.remove(id);
+                    notepad.remove(player.getUniqueId(), id);
                     sender.sendMessage(ChatColor.ITALIC + "Note successfully deleted");
                 }
                 return true;
@@ -92,8 +94,14 @@ public class NoteCommand implements CommandExecutor {
         }
     }
 
-    private boolean noteExistsOrBelongsToPlayer(Note note, Player player) {
-        return note != null && note.belongsTo(player);
+    private boolean noteExistsOrBelongsToPlayer(long id, Player player) {
+        for (Note n : notepad.notesFor(player.getUniqueId())) {
+            if (n.getId() == id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private boolean isValidDeleteOrShowRequest(String[] args) {
@@ -110,10 +118,11 @@ public class NoteCommand implements CommandExecutor {
     }
 
     private List<Note> getNotesFromPlayer(Player player) {
-        String idString = new UUIDConverter().convertToDatabaseValue(player.getUniqueId());
-        return noteBox.query()
-                .equal(Note_.playerUUID, idString)
-                .build()
-                .find();
+//        String idString = new UUIDConverter().convertToDatabaseValue(player.getUniqueId());
+//        return noteBox.query()
+//                .equal(Note_.playerUUID, idString)
+//                .build()
+//                .find();
+        return null;
     }
 }

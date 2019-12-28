@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <option name="objectbox.modelPath" value="$PROJECT_DIR$/objectbox-models/default.json" />
+        <option name="objectbox.modelPath" value="C:\Users\alafleur\git\SpigotNotepad/objectbox-models/default.json" />
         <processor name="io.objectbox.processor.ObjectBoxProcessorShim" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/io/objectbox/objectbox-processor/2.3.4/objectbox-processor-2.3.4.jar" />
@@ -42,7 +42,6 @@
           <entry name="$MAVEN_REPOSITORY$/com/google/truth/extensions/truth-java8-extension/0.37/truth-java8-extension-0.37.jar" />
           <entry name="$MAVEN_REPOSITORY$/com/google/auto/value/auto-value/1.5.3/auto-value-1.5.3.jar" />
           <entry name="$MAVEN_REPOSITORY$/com/google/auto/auto-common/0.9/auto-common-0.9.jar" />
-          <entry name="$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/../lib/tools.jar" />
         </processorPath>
         <module name="spigot_notepad" />
       </profile>
@@ -94,7 +93,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="SpigotNotepad" options="-Aobjectbox.modelPath=$PROJECT_DIR$/objectbox-models/default.json" />
-      <module name="spigot_notepad" options="-Aobjectbox.modelPath=$PROJECT_DIR$/objectbox-models/default.json" />
+      <module name="spigot_notepad" options="-Aobjectbox.modelPath=C:\Users\alafleur\git\SpigotNotepad/objectbox-models/default.json" />
     </option>
   </component>
 </project>

@@ -52,24 +52,24 @@
         <dependency>
             <groupId>io.objectbox</groupId>
             <artifactId>objectbox-java</artifactId>
-            <version>${objectboxVersion}</version>
+            <version>2.3.4</version>
         </dependency>
 
         <!-- Native libraries, you can remove the ones for systems you do not support -->
         <dependency>
             <groupId>io.objectbox</groupId>
             <artifactId>objectbox-linux</artifactId>
-            <version>${objectboxVersion}</version>
+            <version>2.3.4</version>
         </dependency>
         <dependency>
             <groupId>io.objectbox</groupId>
             <artifactId>objectbox-macos</artifactId>
-            <version>${objectboxVersion}</version>
+            <version>2.3.4</version>
         </dependency>
         <dependency>
             <groupId>io.objectbox</groupId>
             <artifactId>objectbox-windows</artifactId>
-            <version>${objectboxVersion}</version>
+            <version>2.3.4</version>
         </dependency>
     </dependencies>
     <pluginRepositories>
@@ -104,7 +104,7 @@
                         <path>
                             <groupId>io.objectbox</groupId>
                             <artifactId>objectbox-processor</artifactId>
-                            <version>${objectboxVersion}</version>
+                            <version>2.3.4</version>
                         </path>
                     </annotationProcessorPaths>
                     <annotationProcessors>
